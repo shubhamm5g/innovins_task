@@ -14,7 +14,7 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
 
 
-<h2 class=" my-4 text-center">User Listing</h2>
+<h2 class=" my-4 text-center">Users Listing</h2>
 <div class="d-flex justify-content-end me-4">
 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModel">Add User</button> -->
     <button type="button"  class="btn btn-primary addUser  me-3">Add User</button>
@@ -29,6 +29,7 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
                             <th style="width:10px !important; text-align:left;">Sr no</th>
                             <th style="padding:8px;">Name</th>
                             <th>Email</th>
+                            <th style="width:10px !important; text-align:left;">Created At</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -36,9 +37,10 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
                         <?php if(!empty($result)){
                             foreach($result as $key => $value){  ?>
                             <tr class="">
-                                <td ><?= ++$key ?></td>
-                                <td ><?= ($value['name'])?></td>
-                                <td ><?= ($value['email'])?></td>
+                                <td style="text-align:left;"><?= ++$key ?></td>
+                                <td style="text-align:left;"><?= ($value['name'])?></td>
+                                <td style="text-align:left;"><?= ($value['email'])?></td>
+                                <td style="text-align:left;" ><?= ($value['created_at'])?></td>
                                 <td >
                                     <div>
                                         <button class="btn btn-danger deleteData " user_id="<?= $value["id"]?>">Delete</button>
