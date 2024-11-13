@@ -6,22 +6,23 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
         header("Location: signin.php");
         exit;
     }
+    $id = (isset($_POST['id']) && !empty( $_POST['id'])) ? $_POST['id'] :"";
     $name = (isset($_POST['name']) &&!empty( $_POST['name']))? $_POST['name'] :"";
-    $description = (isset($_POST['description']) &&!empty( $_POST['description']))? $_POST['description'] :"";
     $price = (isset($_POST['price']) &&!empty( $_POST['price']))? $_POST['price'] :"";
+    $description = (isset($_POST['description']) &&!empty( $_POST['description']))? $_POST['description'] :"";
     if(!(is_integer( $price) || $price>0)){
         echo json_encode(array('status'=>false,"msg"=>"Price must be a positive integer."));
         exit;
     }
-    if(!empty($name) && !empty($description) && !empty($price)){
+    if(!empty($id) &&!empty($name) && !empty($description) && !empty($price)){
 
-        $query = "INSERT INTO products (name, description, price) VALUES ('$name','$description','$price')";
+        $query="update products set name='$name',price=$price,description='$description' WHERE id = '$id'";
         $result = mysqli_query($conn, $query);
         if($result){
-            echo json_encode(array("status" => true, "msg" => "Product is added"));
+            echo json_encode(array("status" => true, "msg" => "Product Updated Successfully", "data" => $result));
             exit;
         }else{
-            echo json_encode(array('status'=>false,"msg"=>"Failed to register Product."));
+            echo json_encode(array('status'=>false,"msg"=>"Failed to update Product."));
             exit;
         }
     }else{

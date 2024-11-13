@@ -9,7 +9,7 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     $id = (isset($_POST['id']) && !empty( $_POST['id'])) ? $_POST['id'] :"";
     $name = (isset($_POST['name']) &&!empty( $_POST['name']))? $_POST['name'] :"";
     $email = (isset($_POST['email']) &&!empty( $_POST['email']))? $_POST['email'] :"";
-    if(!empty($id)){
+    if(!empty($id)&& !empty($name)&& !empty($email)){
 
         $query="update users set name='$name',email='$email' WHERE id = '$id'";
         $result = mysqli_query($conn, $query);
@@ -17,11 +17,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             echo json_encode(array("status" => true, "msg" => "User Updated Successfully", "data" => $result));
             exit;
         }else{
-            echo json_encode(array('status'=>false,"msg"=>"Failed to delete user."));
+            echo json_encode(array('status'=>false,"msg"=>"Failed to update user."));
             exit;
         }
     }else{
-        echo json_encode(array('status'=>false,"msg"=>"Id is required."));
+        echo json_encode(array('status'=>false,"msg"=>"Required fields are missing."));
         exit;
     }
 

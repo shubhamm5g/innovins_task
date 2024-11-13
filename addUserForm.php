@@ -25,11 +25,11 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
             echo json_encode(array("status" => true, "msg" => "User added successfully"));
             exit;
         }else{
-            echo json_encode(array('status'=>false,"msg"=>"Failed to register user."));
+            echo json_encode(array('status'=>false,"msg"=>"Failed to add user."));
             exit;
         }
     }else{
-        echo json_encode(array('status'=>false,"msg"=>"Id is required."));
+        echo json_encode(array('status'=>false,"msg"=>"Required fields are missing."));
         exit;
     }
 

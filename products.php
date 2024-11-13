@@ -16,7 +16,6 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
 
 <h2 class=" my-4 text-center">Products Listing</h2>
 <div class="d-flex justify-content-end me-4">
-<!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModel">Add User</button> -->
     <button type="button"  class="btn btn-primary addProduct  me-3">Add Product</button>
 </div>
 <div class="d-flex justify-content-center ">
@@ -63,7 +62,7 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
 <div class="modal fade" id="updateProduct" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateUserLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-    <form id="updateuserform" method="post">
+    <form id="updateProductForm" method="post">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="updateUserLabel">Update User</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -73,14 +72,20 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
         <div class="row">
             <div class="col col-12">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Full Name">
+                    <label for="name" class="form-label">Product Name</label>
+                    <input type="text" class="form-control" id="name"  name="name" placeholder="Enter Product Name">
                 </div>
             </div>
             <div class="col col-12">
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email Id</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email ">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" class="form-control" id="price"  name="price" placeholder="Enter price ">
+                </div>
+            </div>
+            <div class="col col-12">
+                <div class="mb-3">
+                    <label for="description" class="form-label">Description</label>
+                    <textarea  class="form-control" id="description"  name="description" placeholder="Enter description "></textarea>
                 </div>
             </div>
         </div>
@@ -151,6 +156,8 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
             },
             price: {
                 required: true,
+                number: true,
+                min: 1
             },
             description: {
                 required: true,
@@ -158,10 +165,12 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
         },
         messages: {
             name: {
-                required: 'Please enter Full Name.',
+                required: 'Please enter Product Name.',
             },
             price: {
                 required: 'Please enter Price.',
+                number: 'Price should be a number',
+                min: 'Price should be greater than or equal to 1'
             },
             description: {
                 required: 'Please enter Description.',
@@ -196,27 +205,35 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
     })
 
     // update user
-    $('#updateuserform').validate({
+    $('#updateProductForm').validate({
         rules: {
             name: {
                 required: true
             },
-            email: {
+            price: {
                 required: true,
-                email: true
+                number: true,
+                min: 1
+            },
+            description: {
+                required: true,
             }
         },
         messages: {
             name: {
-                required: 'Please enter Full Name.',
+                required: 'Please enter Product Name.',
             },
-            email: {
-                required: 'Please enter Email.',
-                email: 'Please enter a valid Email.'
+            price: {
+                required: 'Please enter Price.',
+                number: 'Price should be a number',
+                min: 'Price should be greater than or equal to 1'
+            },
+            description: {
+                required: 'Please enter Description.',
             }
         },submitHandler: function (form) {
-            $("#updateuserform").ajaxSubmit({
-                url: "updateUserForm.php",
+            $("#updateProductForm").ajaxSubmit({
+                url: "updateProductForm.php",
                 type: 'post',
                 dataType: 'json',
                 clearForm: false,
@@ -244,7 +261,7 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
     })
 
     $('.updateProduct').click(function () {
-        var id = $(this).attr('user_id');
+        var id = $(this).attr('product_id');
         $.ajax({
             url: 'updateProduct.php',
             type: 'POST',
@@ -257,9 +274,10 @@ $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
                 if(response.status){
                     $(".fulloverlay").fadeOut();
                     $('#updateProduct').modal('show');
-                    $('#updateuserform').find('input[name="id"]').val(response.data[0].id);
-                    $('#updateuserform').find('input[name="name"]').val(response.data[0].name);
-                    $('#updateuserform').find('input[name="email"]').val(response.data[0].email);
+                    $('#updateProductForm').find('input[name="id"]').val(response.data[0].id);
+                    $('#updateProductForm').find('input[name="name"]').val(response.data[0].name);
+                    $('#updateProductForm').find('input[name="price"]').val(response.data[0].price);
+                    $('#updateProductForm').find('textarea[name="description"]').val(response.data[0].description);
                 }else{
                     $(".fulloverlay").fadeOut();
                     customtoater("error",response.msg);

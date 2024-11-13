@@ -8,14 +8,14 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     }
     $id = (isset($_POST['id']) && !empty( $_POST['id'])) ? $_POST['id'] :"";
     if(!empty($id)){
-        $query="SELECT id,name,email from users WHERE id = '$id'";
+        $query="SELECT * from products WHERE id = '$id'";
         $result = mysqli_query($conn, $query);
         $result = mysqli_fetch_all($result,MYSQLI_ASSOC);
         if($result){
-            echo json_encode(array("status" => true, "msg" => "User Detials", "data" => $result));
+            echo json_encode(array("status" => true, "msg" => "Product Detials", "data" => $result));
             exit;
         }else{
-            echo json_encode(array('status'=>false,"msg"=>"Failed to get user data."));
+            echo json_encode(array('status'=>false,"msg"=>"Failed to get product data."));
             exit;
         }
     }else{

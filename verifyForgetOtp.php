@@ -1,7 +1,7 @@
 <?php
 require_once('header.php');
 if(isset( $_SESSION['innovins']) && !empty($_SESSION['innovins'])) {
-    header("Location: index.php");
+    header("Location: users.php");
     exit;
 }
 
