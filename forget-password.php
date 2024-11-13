@@ -10,7 +10,7 @@ if(isset( $_SESSION['innovins']) && !empty($_SESSION['innovins'])) {
     <h2 class="text-center my-4">Forget Password</h2>
     <div class="d-flex justify-content-center ">
         <div class="card p-2 w-50 ">
-            <form id="signin_form" >
+            <form id="forgetpassword" >
                 <div class="row">
                     <div class="col col-12">
                         <div class="mb-3">
@@ -32,30 +32,31 @@ if(isset( $_SESSION['innovins']) && !empty($_SESSION['innovins'])) {
 
 <script>
 
-     $('#signin_form').validate({
+     $('#forgetpassword').validate({
         rules: {
-
             email: {
                 required: true,
-            email: true
+                email: true
             },
             password: {
                 required: true,
+                minlength: 5,
             }
         },
         messages: {
 
             email: {
                 required: 'Please enter Email Address.',
-            email: 'Please enter a valid Email Address.',
+                email: 'Please enter a valid Email Address.',
             },
             password: {
                 required: 'Please enter Password.',
+                minlength: 'Password should be at least 5 characters long.'
             }
         },
         submitHandler: function (form) {
-            $("#signin_form").ajaxSubmit({
-                url: "login.php",
+            $("#forgetpassword").ajaxSubmit({
+                url: "sendForgetOtp.php",
                 type: 'post',
                 dataType: 'json',
                 clearForm: false,
@@ -65,10 +66,10 @@ if(isset( $_SESSION['innovins']) && !empty($_SESSION['innovins'])) {
                 success: function (response) {
                     if(response.status){
                         customtoater("success",response.msg);
-
-                        setTimeout(() => {
-                            window.location.href = "index.php";
+                        setTimeout(function(){
+                            window.location.href = "verifyForgetOtp.php?id="+response.email;
                         }, 1000);
+
                     }else{
                         $(".fulloverlay").fadeOut();
                         customtoater("error",response.msg);

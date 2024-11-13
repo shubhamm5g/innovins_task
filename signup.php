@@ -59,25 +59,28 @@ if(isset( $_SESSION['innovins']) && !empty($_SESSION['innovins'])) {
             },
             password: {
             required: true,
-
+            minlength: 5
             },
             confirmPassword: {
             required: true,
+            minlength: 5,
             equalTo: "#password"
             }
         },
         messages: {
             name: 'Please enter Name.',
             email: {
-            required: 'Please enter Email Address.',
-            email: 'Please enter a valid Email Address.',
+                required: 'Please enter Email Address.',
+                email: 'Please enter a valid Email Address.'
             },
             password: {
-            required: 'Please enter Password.',
+                required: 'Please enter Password.',
+                minlength: 'Password must be at least 5 characters long.'
             },
             confirmPassword: {
-            required: 'Please enter Confirm Password.',
-            equalTo: 'Confirm Password do not match with Password.',
+                required: 'Please enter Confirm Password.',
+                equalTo: 'Confirm Password do not match with Password.',
+                minlength: 'Confirm Password must be at least 5 characters long.'
             }
         },
         submitHandler: function (form) {
