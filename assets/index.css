@@ -1,0 +1,33 @@
+*{
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+    text-decoration: none;
+
+}
+:root{
+    --bg-color: #f1f1f1;
+    --font-color: #333;
+}
+.error{
+    color: red;
+    font-size: smaller;
+}
+body{
+    position: relative;
+    min-height: 100vh;
+}
+.fulloverlay{
+    z-index: 999999;
+    background-color: rgba(199, 199, 199, 0.596);
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 100%;
+}
